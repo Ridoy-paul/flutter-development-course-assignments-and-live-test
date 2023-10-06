@@ -75,6 +75,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
+  
   AppBar _buildAppBar() {
     return AppBar(
       elevation: 0.0,
