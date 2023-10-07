@@ -39,7 +39,7 @@ class CheckoutScreen extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(top: 1.h, left: 1.w, right: 1.w),
                 margin: EdgeInsets.only(top: 1.h),
-                height: 15.h,
+                height: Adaptive.h(15),
                 //color: Colors.red,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -66,7 +66,7 @@ class CheckoutScreen extends StatelessWidget {
                               "Checkout",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 1
                               ),
