@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import '../model/cart.dart';
+import '../widget/cartItem.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   CheckoutScreen({super.key});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  final cartList = Cart.cartList();
+
+  int get total => cartList
+      .map((cartItem) => int.parse(cartItem.price ?? "0") * cartItem.quantity!)
+      .reduce((sum, element) => sum + element);
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +39,13 @@ class CheckoutScreen extends StatelessWidget {
             ),
             Container(
               height: 65.h,
-              color: Colors.deepPurple,
               child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (BuildContext, context) {
-
+                itemCount: Cart.cartList().length,
+                itemBuilder: (BuildContext context, int index) {
+                  Cart cart = Cart.cartList()[index];
+                  return CartItem(
+                    cartItem: cart,
+                  );
                 },
               ),
             ),
@@ -40,27 +55,42 @@ class CheckoutScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: 1.h, left: 1.w, right: 1.w),
                 margin: EdgeInsets.only(top: 1.h),
                 height: Adaptive.h(15),
-                //color: Colors.red,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Subtotal:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                        Text("100.0", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                       const Text(
+                          "Total Amount:",
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "$total\$",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
-                    SizedBox(height: 1.h,),
-
+                    SizedBox(
+                      height: 1.h,
+                    ),
                     Material(
                       color: Color(0xFF674AEF),
                       borderRadius: BorderRadius.circular(30),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Congratulations! Checkout successful!'),
+                            ),
+                          );
+                        },
                         child: Container(
                           width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 15, horizontal: 0),
                           child: Center(
                             child: const Text(
                               "Checkout",
@@ -68,8 +98,7 @@ class CheckoutScreen extends StatelessWidget {
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  letterSpacing: 1
-                              ),
+                                  letterSpacing: 1),
                             ),
                           ),
                         ),
