@@ -20,6 +20,7 @@ class _CartItemState extends State<CartItem> {
   Widget build(BuildContext context) {
 
     return Card(
+      
       elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15), // Adjust the value as needed for the desired border radius
