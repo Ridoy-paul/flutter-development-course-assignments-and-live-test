@@ -13,7 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 4,
+        elevation: 3,
         backgroundColor: bgColorWhite,
         actions: [
           IconButton(
@@ -31,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 children: [
                   Card(
-                    elevation: 5,
+                    elevation: 4,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(25),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -92,24 +92,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 7,),
                   Expanded(
                     child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(30)),
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(5),
                         child: ListView.builder(
                             itemCount: 10,
                             itemBuilder: (context, index) {
-                              return ListTile(
-                                leading: Icon(Icons.star),
-                                title: Text('ListTile 1'),
-                                subtitle: Text('Subtitle 1'),
-                                onTap: () {
-                                  // Handle onTap for ListTile 1
-                                },
+                              return Padding(
+                                padding: const EdgeInsets.all(1.0),
+                                child: Card(
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    side: const BorderSide(
+                                      color: bgColorAssBlack,
+                                    )
+                                  ),
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor: colorDeepOrange,
+                                      child: Text("${index + 1}", style: const TextStyle(color: Colors.white),),
+                                    ),
+                                    title: Text('ListTile 1'),
+                                    subtitle: Text('Subtitle 1'),
+                                    trailing: const Icon(Icons.arrow_right_alt),
+                                    onLongPress: () {
+                                      print(index);
+                                    },
+                                  ),
+                                ),
                               );
                             }),
                       ),
