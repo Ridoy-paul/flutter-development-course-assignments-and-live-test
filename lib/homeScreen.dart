@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'constants/colors.dart';
-import 'widgets/add_todo.dart';
-import 'widgets/update_todo.dart';
-import 'model/todo_brain.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,210 +9,99 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<TODO> todoList = TODO.todoList();
+
+  List<Item> items = [
+    Item(name: 'Apple', isSelected: false),
+    Item(name: 'Banana', isSelected: false),
+    Item(name: 'Orange', isSelected: false),
+    Item(name: 'Mango', isSelected: false),
+    Item(name: 'Grapes', isSelected: false),
+    Item(name: 'Strawberry', isSelected: false),
+    Item(name: 'Pineapple', isSelected: false),
+    Item(name: 'Watermelon', isSelected: false),
+    Item(name: 'Cherry', isSelected: false),
+    Item(name: 'Blueberry', isSelected: false),
+  ];
+
+  void _selectItem(int index) {
+    setState(() {
+      items[index].isSelected = !items[index].isSelected;
+    });
+  }
+
+  void _showSelectedItemsDialog() {
+    int selectedCount = items.where((item) => item.isSelected).length;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Selected Items'),
+          content: Text('Number of selected items: $selectedCount'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Selection Screen"),
         elevation: 3,
-        backgroundColor: bgColorWhite,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-            color: bgColorBlack,
-          )
-        ],
       ),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(5),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  AddToDo(
-                    onAddTap: (TODO todo) {
-                      addToDoCallback(todo);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Expanded(
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: ListView.builder(
-                            itemCount: todoList.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(1.0),
-                                child: Card(
-                                  elevation: 4,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    side: const BorderSide(
-                                      color: bgColorAssBlack,
-                                    ),
-                                  ),
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundColor: colorDeepOrange,
-                                      child: Text(
-                                        "${index + 1}",
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    title: Text('${todoList[index].title}'),
-                                    subtitle: Text('${todoList[index].description}'),
-                                    trailing: const Icon(Icons.arrow_right_alt),
-                                    onLongPress: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40),
-                                            ),
-                                            content: Padding(
-                                              padding: const EdgeInsets.all(0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    height: 40,
-                                                    child: TextButton(
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                        backgroundColor:
-                                                            colorDeepOrange,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                        showModalBottomSheet(
-                                                          isScrollControlled: true,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return UpdateToDo();
-                                                          },
-                                                        );
-                                                      },
-                                                      child: const Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 5),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: <Widget>[
-                                                            Icon(
-                                                              Icons
-                                                                  .edit_calendar,
-                                                              color:
-                                                                  bgColorWhite,
-                                                            ),
-                                                            SizedBox(width: 8),
-                                                            Text(
-                                                              'Edit',
-                                                              style: TextStyle(
-                                                                color:
-                                                                    bgColorWhite,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 40,
-                                                    child: TextButton(
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                        backgroundColor:
-                                                            colorDeepOrange,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 5),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: <Widget>[
-                                                            Icon(
-                                                              Icons
-                                                                  .delete_forever_outlined,
-                                                              color:
-                                                                  bgColorWhite,
-                                                            ),
-                                                            SizedBox(width: 8),
-                                                            Text(
-                                                              'Delete',
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      bgColorWhite),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                    ),
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  side: const BorderSide(
+                    color: bgColorAssBlack,
                   )
-                ],
-              ),
-            ],
+                ),
+                child: ListTile(
+                  title: Text(items[index].name),
+                  onTap: () {
+                    _selectItem(index);
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)
+                  ),
+                  selected: items[index].isSelected,
+                  selectedTileColor: colorDeepOrange,
+                ),
+              );
+            },
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showSelectedItemsDialog();
+        },
+        child: const Icon(Icons.check_sharp),
       ),
     );
   }
 
-  void addToDoCallback(TODO todo) {
-    setState(() {
-      todoList.add(todo);
-    });
-  }
+}
 
+class Item {
+  String name;
+  bool isSelected;
+
+  Item({required this.name, required this.isSelected});
 }
 
