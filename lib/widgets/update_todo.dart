@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
+import '../model/todo_brain.dart';
 
-class UpdateToDo extends StatelessWidget {
+class UpdateToDo extends StatefulWidget {
   const UpdateToDo({
     super.key,
+    required this.todo,
   });
+
+  final ToDo todo;
+
+  @override
+  State<UpdateToDo> createState() => _UpdateToDoState();
+}
+
+class _UpdateToDoState extends State<UpdateToDo> {
+
+  late TextEditingController todoTitleController;
+  late TextEditingController todoDetailsController;
+
+  @override
+  void initState() {
+    super.initState();
+    todoTitleController = TextEditingController(text: widget.todo.title);
+    todoDetailsController = TextEditingController(text: widget.todo.description);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +37,6 @@ class UpdateToDo extends StatelessWidget {
           topRight: Radius.circular(10),
         ),
       ),
-
       padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -40,15 +59,14 @@ class UpdateToDo extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(bottom: 5),
             child: TextFormField(
+              controller: todoTitleController,
               decoration: const InputDecoration(
                 hintText: "Add Title",
                 border: OutlineInputBorder(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(15)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(15)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                   borderSide: BorderSide(color: colorGreen),
                 ),
               ),
@@ -57,16 +75,15 @@ class UpdateToDo extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(bottom: 5),
             child: TextFormField(
+              controller: todoDetailsController,
               maxLines: 5,
               decoration: const InputDecoration(
                 hintText: "Add Description",
                 border: OutlineInputBorder(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(15)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(15)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                   borderSide: BorderSide(color: colorGreen),
                 ),
               ),
