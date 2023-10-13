@@ -112,7 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                         showModalBottomSheet(
-                                                          isScrollControlled: true,
+                                                          isScrollControlled:
+                                                              true,
                                                           context: context,
                                                           builder: (context) {
                                                             return UpdateToDo();
@@ -164,6 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ),
                                                       ),
                                                       onPressed: () {
+                                                        _deleteToDo(index);
                                                         Navigator.pop(context);
                                                       },
                                                       child: const Padding(
@@ -221,5 +223,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _deleteToDo(int index) {
+    setState(() {
+      todoList.removeAt(index);
+    });
+  }
 }
-
