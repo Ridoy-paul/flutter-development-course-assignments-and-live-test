@@ -1,14 +1,27 @@
 
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
+import '../model/todo_brain.dart';
 
-class AddToDo extends StatelessWidget {
+class AddToDo extends StatefulWidget {
   const AddToDo({
     super.key,
+    required this.onAddTap,
   });
 
+  final Function(TODO) onAddTap;
+
+  @override
+  State<AddToDo> createState() => _AddToDoState();
+}
+
+class _AddToDoState extends State<AddToDo> {
   @override
   Widget build(BuildContext context) {
+
+
+
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'constants/colors.dart';
 import 'widgets/add_todo.dart';
 import 'widgets/update_todo.dart';
+import 'model/todo_brain.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<TODO> todoList = TODO.todoList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  const AddToDo(),
+                  AddToDo(
+                    onAddTap: (TODO todo) {
+                      addToDoCallback(todo);
+                    },
+                  ),
                   const SizedBox(
                     height: 7,
                   ),
@@ -44,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(5),
                         child: ListView.builder(
-                            itemCount: 10,
+                            itemCount: todoList.length,
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.all(1.0),
@@ -66,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ),
-                                    title: Text('ListTile 6'),
-                                    subtitle: Text('Subtitle 1'),
+                                    title: Text('${todoList[index].title}'),
+                                    subtitle: Text('${todoList[index].description}'),
                                     trailing: const Icon(Icons.arrow_right_alt),
                                     onLongPress: () {
                                       showDialog(
@@ -203,5 +210,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  void addToDoCallback(TODO todo) {
+    setState(() {
+      todoList.add(todo);
+    });
+  }
+
 }
 
