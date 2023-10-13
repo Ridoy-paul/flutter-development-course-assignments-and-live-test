@@ -92,7 +92,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 7,),
+                  const SizedBox(
+                    height: 7,
+                  ),
                   Expanded(
                     child: Card(
                       elevation: 4,
@@ -108,21 +110,95 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Card(
                                   elevation: 4,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    side: const BorderSide(
-                                      color: bgColorAssBlack,
-                                    )
-                                  ),
+                                      borderRadius: BorderRadius.circular(30),
+                                      side: const BorderSide(
+                                        color: bgColorAssBlack,
+                                      )),
                                   child: ListTile(
                                     leading: CircleAvatar(
                                       backgroundColor: colorDeepOrange,
-                                      child: Text("${index + 1}", style: const TextStyle(color: Colors.white),),
+                                      child: Text(
+                                        "${index + 1}",
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
                                     ),
-                                    title: Text('ListTile 1'),
+                                    title: Text('ListTile 6'),
                                     subtitle: Text('Subtitle 1'),
                                     trailing: const Icon(Icons.arrow_right_alt),
                                     onLongPress: () {
-                                      print(index);
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(40),
+                                            ),
+                                            content: Padding(
+                                              padding: const EdgeInsets.all(0),
+                                              child: SizedBox(
+                                               width: MediaQuery.sizeOf(context).width * 1,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 40,
+                                                      child: TextButton(
+                                                        style: TextButton.styleFrom(
+                                                          backgroundColor: colorDeepOrange,
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.circular(30),
+                                                          )
+                                                        ),
+                                                        onPressed: () {
+
+                                                        },
+                                                        child: const Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: <Widget>[
+                                                              Icon(Icons.edit_calendar, color: bgColorWhite,),
+                                                              SizedBox(width: 8),
+                                                              Text('Edit', style: TextStyle(color: bgColorWhite),),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10,),
+                                                    SizedBox(
+                                                      height: 40,
+                                                      child: TextButton(
+                                                        style: TextButton.styleFrom(
+                                                            backgroundColor: colorDeepOrange,
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(30),
+                                                            )
+                                                        ),
+                                                        onPressed: () {
+
+                                                        },
+                                                        child: const Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: <Widget>[
+                                                              Icon(Icons.delete_forever_outlined, color: bgColorWhite,),
+                                                              SizedBox(width: 8),
+                                                              Text('Delete', style: TextStyle(color: bgColorWhite),),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
                                     },
                                   ),
                                 ),
