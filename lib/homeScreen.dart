@@ -9,7 +9,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   List<Item> items = [
     Item(name: 'Apple', isSelected: false),
     Item(name: 'Banana', isSelected: false),
@@ -69,15 +68,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(15),
                   side: const BorderSide(
                     color: bgColorAssBlack,
-                  )
+                  ),
                 ),
                 child: ListTile(
-                  title: Text(items[index].name),
+                  title: Text(
+                    items[index].name,
+                    style: TextStyle(
+                      color: items[index].isSelected? bgColorWhite : bgColorBlack,
+                    ),
+                  ),
                   onTap: () {
                     _selectItem(index);
                   },
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   selected: items[index].isSelected,
                   selectedTileColor: colorDeepOrange,
@@ -95,7 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
 
 class Item {
@@ -103,4 +106,3 @@ class Item {
   bool isSelected;
   Item({required this.name, required this.isSelected});
 }
-
