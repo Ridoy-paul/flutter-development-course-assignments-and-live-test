@@ -1,16 +1,16 @@
-class TODO {
+class ToDo {
   String? title;
   String? description;
   DateTime? createdAt, updatedAt;
 
-  TODO({
+  ToDo({
     required this.title,
     required this.description,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  static List<TODO> todoList() {
+  static List<ToDo> todoList() {
     return [];
   }
 }

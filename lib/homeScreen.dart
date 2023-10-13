@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<TODO> todoList = TODO.todoList();
+  List<ToDo> todoList = ToDo.todoList();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 children: [
                   AddToDo(
-                    onAddTap: (TODO todo) {
+                    onAddTap: (ToDo todo) {
                       addToDoCallback(todo);
                     },
                   ),
@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView.builder(
                             itemCount: todoList.length,
                             itemBuilder: (context, index) {
+                              final ToDo todo = todoList[index];
                               return Padding(
                                 padding: const EdgeInsets.all(1.0),
                                 child: Card(
@@ -64,6 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
                                     leading: CircleAvatar(
                                       backgroundColor: colorDeepOrange,
                                       child: Text(
@@ -73,8 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ),
-                                    title: Text('${todoList[index].title}'),
-                                    subtitle: Text('${todoList[index].description}'),
+                                    title: Text('${todo.title}'),
+                                    subtitle: Text('${todo.description}'),
                                     trailing: const Icon(Icons.arrow_right_alt),
                                     onLongPress: () {
                                       showDialog(
@@ -211,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void addToDoCallback(TODO todo) {
+  void addToDoCallback(ToDo todo) {
     setState(() {
       todoList.add(todo);
     });

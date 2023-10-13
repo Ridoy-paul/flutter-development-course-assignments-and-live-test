@@ -8,7 +8,7 @@ class AddToDo extends StatefulWidget {
     required this.onAddTap,
   });
 
-  final Function(TODO) onAddTap;
+  final Function(ToDo) onAddTap;
 
   @override
   State<AddToDo> createState() => _AddToDoState();
@@ -21,7 +21,7 @@ class _AddToDoState extends State<AddToDo> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   _submitToDoForm() {
-    TODO todo = TODO(
+    ToDo todo = ToDo(
       title: todoTitleController.text.trim(),
       description: todoDescriptionController.text.trim(),
       createdAt: DateTime.now(),
