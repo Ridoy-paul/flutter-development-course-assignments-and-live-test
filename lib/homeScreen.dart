@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants/colors.dart';
 import 'widgets/add_todo.dart';
+import 'widgets/update_todo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -97,7 +98,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .circular(30),
                                                         ),
                                                       ),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        showModalBottomSheet(
+                                                          isScrollControlled: true,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return UpdateToDo();
+                                                          },
+                                                        );
+                                                      },
                                                       child: const Padding(
                                                         padding: EdgeInsets
                                                             .symmetric(
@@ -142,7 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .circular(30),
                                                         ),
                                                       ),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
                                                       child: const Padding(
                                                         padding: EdgeInsets
                                                             .symmetric(
@@ -192,3 +204,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
