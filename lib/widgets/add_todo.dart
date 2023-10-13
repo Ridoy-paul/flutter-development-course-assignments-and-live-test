@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../model/todo_brain.dart';
@@ -16,12 +15,25 @@ class AddToDo extends StatefulWidget {
 }
 
 class _AddToDoState extends State<AddToDo> {
+  final TextEditingController todoTitleController = TextEditingController();
+  final TextEditingController todoDescriptionController =
+      TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  _submitToDoForm() {
+    TODO todo = TODO(
+      title: todoTitleController.text.trim(),
+      description: todoDescriptionController.text.trim(),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+    todoTitleController.clear();
+    todoDescriptionController.clear();
+    widget.onAddTap(todo);
+  }
+
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -29,58 +41,75 @@ class _AddToDoState extends State<AddToDo> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 5),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Add Title",
-                  border: OutlineInputBorder(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(15)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(15)),
-                    borderSide: BorderSide(color: colorGreen),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 5),
-              child: TextFormField(
-                maxLines: 2,
-                decoration: const InputDecoration(
-                  hintText: "Add Description",
-                  border: OutlineInputBorder(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(15)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(15)),
-                    borderSide: BorderSide(color: colorGreen),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 5),
+                child: TextFormField(
+                  controller: todoTitleController,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return "Please Enter any Title";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Add Title",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderSide: BorderSide(color: colorGreen),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 35,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: colorDeepOrange,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    )),
-                child: Text("Add"),
+              Container(
+                margin: const EdgeInsets.only(bottom: 5),
+                child: TextFormField(
+                  controller: todoDescriptionController,
+                  maxLines: 2,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return "Please Enter any Description";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Add Description",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderSide: BorderSide(color: colorGreen),
+                    ),
+                  ),
+                ),
               ),
-            )
-          ],
+              SizedBox(
+                width: double.infinity,
+                height: 35,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _submitToDoForm();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: colorDeepOrange,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      )),
+                  child: Text("Add"),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
