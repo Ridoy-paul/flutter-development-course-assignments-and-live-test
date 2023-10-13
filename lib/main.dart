@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'homeScreen.dart';
 
-void main() => runApp(const ToDoApp());
+void main() => runApp(const SelectItemApp());
 
-class ToDoApp extends StatelessWidget {
-  const ToDoApp({super.key});
+class SelectItemApp extends StatelessWidget {
+  const SelectItemApp({super.key});
 
   @override
   Widget build(BuildContext context) {
