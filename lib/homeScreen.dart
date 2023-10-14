@@ -111,13 +111,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     onPressed: () {
                                                       Navigator.pop(context);
                                                       showModalBottomSheet(
-                                                        isScrollControlled: true,
+                                                        isScrollControlled:
+                                                            true,
                                                         context: context,
                                                         builder: (context) {
                                                           return UpdateToDo(
                                                             todo: todo,
-                                                            onToDoUpdate: (String todoTitle, String todoDetails) {
-                                                              _updateToDo(index, todoTitle, todoDetails);
+                                                            onToDoUpdate: (String
+                                                                    todoTitle,
+                                                                String
+                                                                    todoDetails) {
+                                                              _updateToDo(
+                                                                  index,
+                                                                  todoTitle,
+                                                                  todoDetails);
                                                             },
                                                           );
                                                         },
@@ -155,10 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   height: 40,
                                                   child: TextButton(
                                                     style: TextButton.styleFrom(
-                                                      backgroundColor:
-                                                          colorDeepOrange,
-                                                      shape:
-                                                          RoundedRectangleBorder(
+                                                      backgroundColor: colorDeepOrange,
+                                                      shape: RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(30),
@@ -233,7 +238,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       todoList[index].title = title;
       todoList[index].description = details;
-
     });
   }
 }
