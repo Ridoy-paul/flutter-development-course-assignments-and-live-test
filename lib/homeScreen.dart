@@ -226,4 +226,11 @@ class _HomeScreenState extends State<HomeScreen> {
       todoList.removeAt(index);
     });
   }
+
+  void _updateToDo(int index, String title, String details) {
+    setState(() {
+
+    });
+  }
+
 }

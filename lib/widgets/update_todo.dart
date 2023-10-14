@@ -38,71 +38,85 @@ class _UpdateToDoState extends State<UpdateToDo> {
         ),
       ),
       padding: const EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Update ToDo",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
+      child: Form(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Update ToDo",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.close),
+                )
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 5),
+              child: TextFormField(
+                controller: todoTitleController,
+                validator: (String? value) {
+                  if(value!.isEmpty) {
+                    return "Please Enter any Title.";
+                  }
+                  return null;
                 },
-                icon: const Icon(Icons.close),
-              )
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 5),
-            child: TextFormField(
-              controller: todoTitleController,
-              decoration: const InputDecoration(
-                hintText: "Add Title",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide(color: colorGreen),
+                decoration: const InputDecoration(
+                  hintText: "Add Title",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(color: colorGreen),
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 5),
-            child: TextFormField(
-              controller: todoDetailsController,
-              maxLines: 5,
-              decoration: const InputDecoration(
-                hintText: "Add Description",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide(color: colorGreen),
+            Container(
+              margin: const EdgeInsets.only(bottom: 5),
+              child: TextFormField(
+                controller: todoDetailsController,
+                validator: (String? value) {
+                  if(value!.isEmpty) {
+                    return "Please Enter Description!";
+                  }
+                  return null;
+                },
+                maxLines: 5,
+                decoration: const InputDecoration(
+                  hintText: "Add Description",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(color: colorGreen),
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 35,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: colorDeepOrange,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  )),
-              child: Text("Update TODO"),
-            ),
-          )
-        ],
+            SizedBox(
+              width: double.infinity,
+              height: 35,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: colorDeepOrange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    )),
+                child: Text("Update TODO"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
