@@ -117,6 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         builder: (context) {
                                                           return UpdateToDo(
                                                             todo: todo,
+                                                            onToDoUpdate: (String todoTitle, String todoDetails) {
+                                                              _updateToDo(index, todoTitle, todoDetails);
+                                                            },
                                                           );
                                                         },
                                                       );
@@ -229,7 +232,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateToDo(int index, String title, String details) {
     setState(() {
-
+      todoList[index].title = title;
+      todoList[index].description = details;
     });
   }
 

@@ -6,18 +6,20 @@ class UpdateToDo extends StatefulWidget {
   const UpdateToDo({
     super.key,
     required this.todo,
+    required this.onToDoUpdate,
   });
 
   final ToDo todo;
+  final Function(String, String) onToDoUpdate;
 
   @override
   State<UpdateToDo> createState() => _UpdateToDoState();
 }
 
 class _UpdateToDoState extends State<UpdateToDo> {
-
   late TextEditingController todoTitleController;
   late TextEditingController todoDetailsController;
+  final GlobalKey<FormState> _updateFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _UpdateToDoState extends State<UpdateToDo> {
       ),
       padding: const EdgeInsets.all(10),
       child: Form(
+        key: _updateFormKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -106,7 +109,15 @@ class _UpdateToDoState extends State<UpdateToDo> {
               width: double.infinity,
               height: 35,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if(_updateFormKey.currentState!.validate()) {
+                    widget.onToDoUpdate(
+                      todoTitleController.text.trim(),
+                      todoDetailsController.text.trim(),
+                    );
+                    Navigator.pop(context);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: colorDeepOrange,
                     shape: RoundedRectangleBorder(
