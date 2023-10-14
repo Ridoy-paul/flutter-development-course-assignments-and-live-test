@@ -111,8 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     onPressed: () {
                                                       Navigator.pop(context);
                                                       showModalBottomSheet(
-                                                        isScrollControlled:
-                                                            true,
+                                                        //isScrollControlled: true,
                                                         context: context,
                                                         builder: (context) {
                                                           return UpdateToDo(
@@ -234,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       todoList[index].title = title;
       todoList[index].description = details;
+
     });
   }
-
 }
