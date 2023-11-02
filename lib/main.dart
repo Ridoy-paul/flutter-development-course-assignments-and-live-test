@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'api_service.dart';
 import 'model/error.dart';
 import 'model/photo.dart';
-import 'screen/photo_detail_screen.dart';
+import 'widgets/photoItem.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -54,35 +55,6 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
           return Center(child: CircularProgressIndicator());
         },
       ),
-    );
-  }
-}
-
-class PhotoListView extends StatelessWidget {
-  final List<Photo> photos;
-
-  PhotoListView({required this.photos});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: photos.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(photos[index].thumbnailUrl),
-          ),
-          title: Text(photos[index].title),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PhotoDetailScreen(photo: photos[index]),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }
