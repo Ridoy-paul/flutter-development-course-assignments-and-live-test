@@ -15,15 +15,24 @@ class PhotoDetailScreen extends StatelessWidget {
         title: const Text('Photo Details'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.network(photo.url),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
-              'ID: ${photo.id}\nTitle: ${photo.title}',
+              'Title: ${photo.title}',
               style: const TextStyle(fontSize: 18),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Text(
+              'ID: ${photo.id}',
+              style: const TextStyle(fontSize: 18),
+            ),
+          ),
+
         ],
       ),
     );
