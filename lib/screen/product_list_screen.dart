@@ -4,7 +4,6 @@ import '../model/error.dart';
 import '../model/photo.dart';
 import '../widgets/photoItem.dart';
 
-
 class PhotoListScreen extends StatefulWidget {
   const PhotoListScreen({super.key});
 
