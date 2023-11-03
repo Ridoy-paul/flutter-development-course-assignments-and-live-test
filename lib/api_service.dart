@@ -11,7 +11,8 @@ class ApiService {
     if (response.statusCode == 200) {
       Iterable list = json.decode(response.body);
       return list.map((model) => Photo.fromJson(model)).toList();
-    } else {
+    }
+    else {
       throw AppError.fromJson(json.decode(response.body));
     }
   }

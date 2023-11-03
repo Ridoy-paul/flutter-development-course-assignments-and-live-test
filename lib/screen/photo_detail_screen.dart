@@ -6,7 +6,7 @@ import '../model/error.dart';
 class PhotoDetailScreen extends StatelessWidget {
   final Photo photo;
 
-  PhotoDetailScreen({super.key, required this.photo});
+  const PhotoDetailScreen({super.key, required this.photo});
 
   @override
   Widget build(BuildContext context) {
