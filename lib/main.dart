@@ -8,6 +8,8 @@ import 'widgets/photoItem.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,12 +18,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PhotoListScreen(),
+      home: const PhotoListScreen(),
     );
   }
 }
 
 class PhotoListScreen extends StatefulWidget {
+  const PhotoListScreen({super.key});
+
   @override
   _PhotoListScreenState createState() => _PhotoListScreenState();
 }
@@ -52,7 +56,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
               child: Text('Error: ${(snapshot.error as AppError).message}'),
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
