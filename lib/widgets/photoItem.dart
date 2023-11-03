@@ -12,19 +12,20 @@ class PhotoListView extends StatelessWidget {
     return ListView.builder(
       itemCount: photos.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(photos[index].thumbnailUrl),
+        return Container(
+          margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 1),
+          child: ListTile(
+            leading: Image.network(photos[index].thumbnailUrl),
+            title: Text(photos[index].title),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PhotoDetailScreen(photo: photos[index]),
+                ),
+              );
+            },
           ),
-          title: Text(photos[index].title),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PhotoDetailScreen(photo: photos[index]),
-              ),
-            );
-          },
         );
       },
     );
