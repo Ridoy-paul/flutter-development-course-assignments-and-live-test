@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'constants/colors.dart';
-import 'widgets/add_todo.dart';
-import 'widgets/update_todo.dart';
-import 'model/todo_brain.dart';
+import 'weather_information.dart';
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,232 +10,57 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<ToDo> todoList = ToDo.todoList();
+  String jsonString = '''
+  [
+    {"city": "New York", "temperature": 20, "condition": "Clear", "humidity": 60, "windSpeed": 5.5},
+    {"city": "Los Angeles", "temperature": 25, "condition": "Sunny", "humidity": 50, "windSpeed": 6.8},
+    {"city": "London", "temperature": 15, "condition": "Partly Cloudy", "humidity": 70, "windSpeed": 4.2},
+    {"city": "Tokyo", "temperature": 28, "condition": "Rainy", "humidity": 75, "windSpeed": 8.0},
+    {"city": "Sydney", "temperature": 22, "condition": "Cloudy", "humidity": 55, "windSpeed": 7.3}
+  ]
+  ''';
 
   @override
   Widget build(BuildContext context) {
+    List<Weather> weatherData = (json.decode(jsonString) as List)
+        .map((data) => Weather.fromJson(data))
+        .toList();
+
     return Scaffold(
       appBar: AppBar(
-        elevation: 3,
-        backgroundColor: bgColorWhite,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-            color: bgColorBlack,
-          )
-        ],
+        title: const Text('Weather Info App'),
+        backgroundColor: Colors.deepPurple,
       ),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          child: Stack(
-            children: [
-              Column(
+      body: ListView.builder(
+        itemCount: weatherData.length,
+        itemBuilder: (context, index) {
+          Weather weather = weatherData[index];
+          return Card(
+            elevation: 5,
+            margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              side: BorderSide(
+                color: Colors.black12,
+                width: 1,
+              )
+            ),
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              title: Text('City: ${weather.city}', style: const TextStyle(fontWeight: FontWeight.w500),),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AddToDo(
-                    onAddTap: (ToDo todo) {
-                      addToDoCallback(todo);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Expanded(
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: ListView.builder(
-                          itemCount: todoList.length,
-                          itemBuilder: (context, index) {
-                            final ToDo todo = todoList[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(1.0),
-                              child: Card(
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  side: const BorderSide(
-                                    color: bgColorAssBlack,
-                                  ),
-                                ),
-                                child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  leading: CircleAvatar(
-                                    backgroundColor: colorDeepOrange,
-                                    child: Text(
-                                      "${index + 1}",
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  title: Text('${todo.title}'),
-                                  subtitle: Text('${todo.description}'),
-                                  trailing: const Icon(Icons.arrow_right_alt),
-                                  onLongPress: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
-                                          content: Padding(
-                                            padding: const EdgeInsets.all(0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                  height: 40,
-                                                  child: TextButton(
-                                                    style: TextButton.styleFrom(
-                                                      backgroundColor:
-                                                          colorDeepOrange,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                      showModalBottomSheet(
-                                                        isScrollControlled:
-                                                            true,
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return UpdateToDo(
-                                                            todo: todo,
-                                                            onToDoUpdate: (String
-                                                                    todoTitle,
-                                                                String
-                                                                    todoDetails) {
-                                                              _updateToDo(
-                                                                  index,
-                                                                  todoTitle,
-                                                                  todoDetails);
-                                                            },
-                                                          );
-                                                        },
-                                                      );
-                                                    },
-                                                    child: const Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 5),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.edit_calendar,
-                                                            color: bgColorWhite,
-                                                          ),
-                                                          SizedBox(width: 8),
-                                                          Text(
-                                                            'Edit',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  bgColorWhite,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                SizedBox(
-                                                  height: 40,
-                                                  child: TextButton(
-                                                    style: TextButton.styleFrom(
-                                                      backgroundColor: colorDeepOrange,
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      _deleteToDo(index);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 5),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons
-                                                                .delete_forever_outlined,
-                                                            color: bgColorWhite,
-                                                          ),
-                                                          SizedBox(width: 8),
-                                                          Text(
-                                                            'Delete',
-                                                            style: TextStyle(
-                                                                color:
-                                                                    bgColorWhite),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  )
+                  Text('Temperature: ${weather.temperature}°C'),
+                  Text('Condition: ${weather.condition}'),
+                  Text('Humidity: ${weather.humidity}%'),
+                  Text('Wind Speed: ${weather.windSpeed} m/s'),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
-  }
-
-  void addToDoCallback(ToDo todo) {
-    setState(() {
-      todoList.add(todo);
-    });
-  }
-
-  void _deleteToDo(int index) {
-    setState(() {
-      todoList.removeAt(index);
-    });
-  }
-
-  void _updateToDo(int index, String title, String details) {
-    setState(() {
-      todoList[index].title = title;
-      todoList[index].description = details;
-    });
   }
 }

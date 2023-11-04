@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'homeScreen.dart';
 
-void main() => runApp(const ToDoApp());
+void main() => runApp(const WeatherInfoApp());
 
-class ToDoApp extends StatelessWidget {
-  const ToDoApp({super.key});
+class WeatherInfoApp extends StatelessWidget {
+  const WeatherInfoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
